@@ -18,6 +18,16 @@ enabled=1
 EOF
 rpm --import https://files.zimbra.com/downloads/security/public.key 2>&1
 
+##Install the Zimbra Collaboration ##
+#echo "Downloading Zimbra 9 built by Zextras"
+#wget -O zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz https://download.zextras.com/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz
+
+echo "Extracting files from the archive"
+tar xzvf /opt/zimbra-install/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz -C /opt/zimbra-install/
+
+echo "Installing Zimbra Collaboration just the Software"
+cd /opt/zimbra-install/zimbra-installer && ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys
+
 ##Creating the Zimbra Collaboration Config File ##
 cat <<EOF >/opt/zimbra-install/installParameters
 AVDOMAIN="$DOMAIN"
@@ -122,15 +132,6 @@ zimbra_require_interprocess_security="1"
 zimbra_server_hostname="$HOSTNAME.$DOMAIN"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap zimbra-logger zimbra-mta zimbra-dnscache zimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-memcached zimbra-proxy zimbra-drive zimbra-chat"
 EOF
-##Install the Zimbra Collaboration ##
-#echo "Downloading Zimbra 9 built by Zextras"
-#wget -O zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz https://download.zextras.com/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz
-
-echo "Extracting files from the archive"
-tar xzvf /opt/zimbra-install/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz -C /opt/zimbra-install/
-
-echo "Installing Zimbra Collaboration just the Software"
-cd /opt/zimbra-install/zimbra-installer && ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys
 
 echo "Installing Zimbra Collaboration injecting the configuration"
 /opt/zimbra/libexec/zmsetup.pl -c /opt/zimbra-install/installParameters
