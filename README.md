@@ -49,4 +49,4 @@ See: https://docs.docker.com/engine/install/
 (and WAIT...)
 
 ### LICENSE
-GNU GPL v2
+This work is released under GNU General Public License v3 or above.
