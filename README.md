@@ -1,6 +1,8 @@
 # zimbra-docker
 The project to build a Zimbra 9 (built by Zextras) Docker image based on Rocky Linux 8.
 
+Check out the built image on Docker Hub: https://hub.docker.com/r/iwayvietnam/zimbra_all
+
 ### How to build a new Docker image
 ##### Firstly, of course, install Docker and setup to manage Docker as a non-root user
 See: https://docs.docker.com/engine/install/
