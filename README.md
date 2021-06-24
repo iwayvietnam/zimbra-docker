@@ -36,6 +36,7 @@ See: https://docs.docker.com/engine/install/
 
 ##### Run a new dnsmasq container:
 > $ docker pull 4km3/dnsmasq
+> 
 > $ docker run --name dnsmasq-iwaytest2 -d -it -p 172.20.0.1:53:53/tcp -p 172.20.0.1:53:53/udp --net=zimbranet --cap-add=NET_ADMIN 4km3/dnsmasq --address=/iwaytest2.com/172.20.0.3 --domain=iwaytest2.com --mx-host=iwaytest2.com,mail.iwaytest2.com,0
 
 (assumption: the new Zimbra domain is iwaytest2.com)
