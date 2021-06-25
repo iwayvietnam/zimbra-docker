@@ -1,8 +1,8 @@
 ### Zimra-docker ChangeLog
 
-##### v0.1 - the initial version:
+##### v0.1/v0.2 - the initial version:
 + Build a Docker image
 + Run a new Zimbra docker container
 
-##### v0.2
+##### v0.3
 + Add docker-compose capacibility (thanks to Vo Trung Huy aka. [huyrevison2010](https://github.com/huyrevison2010))
