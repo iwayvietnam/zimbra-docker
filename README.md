@@ -50,8 +50,7 @@ See: https://docs.docker.com/engine/install/
 # About for Docker compose :
 ##### Require : Install docker-compose for your server
 ##### Run command
-> $ cd docker-compose
-> $ mkdir zimbra-storage
+> $ cd docker-compose && mkdir zimbra-storage
 > $ docker-compose up -d
 ##### Command check status
 > $ docker-compose status
