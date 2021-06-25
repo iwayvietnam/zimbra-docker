@@ -1,0 +1,46 @@
+version: '3.2'
+services:
+  dns-server:
+      image: 4km3/dnsmasq
+      container_name: dns-servers
+      restart: always
+      ports:
+        - '53:53/tcp'
+        - '53:53/udp'
+      cap_add:
+        - NET_ADMIN
+      command: --address=/iwaytest2.com/10.0.0.2 --domain=iwaytest2.com --mx-host=iwaytest2.com,mail.iwaytest2.com,0
+      networks:
+        vpcbr:
+          ipv4_address: 10.0.0.2
+  zimbra_all:
+      image: iwayvietnam/zimbra_all
+      container_name: zimbra-iwaytest2
+      hostname: mail.iwaytest2.com
+      ports:
+          - '25:25'
+          - '80:80'
+          - '465:465'
+          - '587:587'
+          - '110:110'
+          - '143:143'
+          - '993:993'
+          - '995:995'
+          - '443:443'
+          - '3443:3443'
+          - '9071:9071'
+      dns:
+          - 10.0.0.2
+      volumes:
+          - './zimbra-storage:/opt/zimbra:rw'
+      environment:
+          - PASSWORD=Zimbra2021
+      networks:
+        vpcbr:
+          ipv4_address: 10.0.0.3
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.0.0.0/24
