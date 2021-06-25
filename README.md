@@ -49,8 +49,9 @@ See: https://docs.docker.com/engine/install/
 (and WAIT...)
 # About for Docker compose :
 ##### Require : Install docker-compose for your server
-##### Run command
+##### Create storage for docker-compose
 > $ cd docker-compose && mkdir zimbra-storage
+##### Run docker-compose 
 > $ docker-compose up -d
 ##### Command check status
 > $ docker-compose status
@@ -60,4 +61,3 @@ See: https://docs.docker.com/engine/install/
 
 ### LICENSE
 This work is released under GNU General Public License v3 or above.
-
