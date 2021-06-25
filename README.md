@@ -47,17 +47,18 @@ See: https://docs.docker.com/engine/install/
 ##### Run a new Zimbra container:
 > $ docker run --name zimbra-iwaytest2 -p 25:25 -p 80:80 -p 465:465 -p 587:587 -p 110:110 -p 143:143 -p 993:993 -p 995:995 -p 443:443 -p 3443:3443 -p 9071:9071 -h mail.iwaytest2.com --net=zimbranet --dns 172.20.0.1 -v zimbra-iwaytest2:/opt/zimbra -i -t -e PASSWORD=Zimbra2021 iwayvietnam/zimbra_all
 (and WAIT...)
-##### About for Docker compose :
-# Require : Install docker-compose for your server
-# Run command
+# About for Docker compose :
+##### Require : Install docker-compose for your server
+##### Run command
 > $ cd docker-compose
 > $ mkdir zimbra-storage
 > $ docker-compose up -d
-# Command check status
+##### Command check status
 > $ docker-compose status
-# Command check logs  
+##### Command check logs  
 > $ docker-compose logs -f
 (and WAIT...)
 
 ### LICENSE
 This work is released under GNU General Public License v3 or above.
+
