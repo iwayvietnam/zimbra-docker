@@ -36,7 +36,7 @@ See: https://docs.docker.com/engine/install/
 
 ##### Run a new dnsmasq container:
 > $ docker pull 4km3/dnsmasq
-> 
+>
 > $ docker run --name dnsmasq-iwaytest2 -d -it -p 172.20.0.1:53:53/tcp -p 172.20.0.1:53:53/udp --net=zimbranet --cap-add=NET_ADMIN 4km3/dnsmasq --address=/iwaytest2.com/172.20.0.3 --domain=iwaytest2.com --mx-host=iwaytest2.com,mail.iwaytest2.com,0
 
 (assumption: the new Zimbra domain is iwaytest2.com)
@@ -46,7 +46,17 @@ See: https://docs.docker.com/engine/install/
 
 ##### Run a new Zimbra container:
 > $ docker run --name zimbra-iwaytest2 -p 25:25 -p 80:80 -p 465:465 -p 587:587 -p 110:110 -p 143:143 -p 993:993 -p 995:995 -p 443:443 -p 3443:3443 -p 9071:9071 -h mail.iwaytest2.com --net=zimbranet --dns 172.20.0.1 -v zimbra-iwaytest2:/opt/zimbra -i -t -e PASSWORD=Zimbra2021 iwayvietnam/zimbra_all
-
+(and WAIT...)
+##### About for Docker compose :
+# Require : Install docker-compose for your server
+# Run command
+> $ cd docker-compose
+> $ mkdir zimbra-storage
+> $ docker-compose up -d
+# Command check status
+> $ docker-compose status
+# Command check logs  
+> $ docker-compose logs -f
 (and WAIT...)
 
 ### LICENSE
