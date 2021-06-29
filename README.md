@@ -13,12 +13,12 @@ $ docker pull rockylinux/rockylinux
 ```
 ##### Checkout this git repo
 ```bash
-* $ git clone https://github.com/iwayvietnam/zimbra-docker.git
-* $ cd zimbra-docker
+* $ git clone https://github.com/iwayvietnam/zimbra-docker.git && cd zimbra-docker
 ```
 ##### Download the latest Zimbra 9 (built by Zextras)
 ```bash
-$ wget -O opt/zimbra-install/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz https://download.zextras.com/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz
+$ wget -O opt/zimbra-install/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz \
+https://download.zextras.com/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz
 ```
 ##### Build Zimbra a new docker image
 ```bash
@@ -31,8 +31,7 @@ $ docker network create --driver=bridge --subnet=172.28.0.0/16 zimbranet
 ```
 ##### Run a new dnsmasq container:
 ```bash
-* $ docker pull 4km3/dnsmasq
-* $ docker run --name dnsmasq-iwaytest2 -d -it \
+$ docker run --name dnsmasq-iwaytest2 -d -it \
 -p 172.28.0.1:53:53/tcp -p 172.28.0.1:53:53/udp \
 --net=zimbranet --cap-add=NET_ADMIN 4km3/dnsmasq \
 --address=/iwaytest2.com/172.28.0.3 \
