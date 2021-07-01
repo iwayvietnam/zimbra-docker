@@ -152,7 +152,9 @@ echo "Installing Zimbra Collaboration injecting the configuration"
 /opt/zimbra/libexec/zmsetup.pl -c /opt/zimbra-install/installParameters
 
 su - zimbra -c 'zmcontrol restart'
-echo "You can access now to your Zimbra Collaboration Server"
+echo "You can access now to your Zimbra Collaboration Server $HOSTNAME.$DOMAIN"
+
+rm -Rf /opt/zimbra-install
 
 if [[ $1 == "-d" ]]; then
   while true; do sleep 1000; done
