@@ -16,9 +16,13 @@
 
 #!/bin/sh
 ## Preparing all the variables like IP, Hostname, etc, all of them from the container
-sleep 5
 HOSTNAME=$(hostname -a)
 DOMAIN=$(hostname -d)
+
+## BEGIN. Check if Zimbra already installed?
+if [ -e /opt/zimbra-install/install-autoKeys ]
+then ## Zimbra NOT installed yet.
+
 CONTAINERIP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 RANDOMHAM=$(date +%s|sha256sum|base64|head -c 10)
 RANDOMSPAM=$(date +%s|sha256sum|base64|head -c 10)
@@ -152,9 +156,13 @@ echo "Installing Zimbra Collaboration injecting the configuration"
 /opt/zimbra/libexec/zmsetup.pl -c /opt/zimbra-install/installParameters
 
 su - zimbra -c 'zmcontrol restart'
-echo "You can access now to your Zimbra Collaboration Server $HOSTNAME.$DOMAIN"
+echo "You can access now to your Zimbra Collaboration Server https://$HOSTNAME.$DOMAIN"
 
 rm -Rf /opt/zimbra-install
+
+else ## Zimbra already installed. Just need to start Zimbra services.
+  su - zimbra -c 'zmcontrol restart'
+fi ## END. Check if Zimbra already installed?
 
 if [[ $1 == "-d" ]]; then
   while true; do sleep 1000; done
