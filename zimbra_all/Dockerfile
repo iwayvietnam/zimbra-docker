@@ -28,6 +28,7 @@ RUN yum -y update && yum -y install \
   openssh-clients \
   bind-utils \
   rsyslog \
+  nmap-ncat \
   wget
 
 RUN ln -s -f /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
