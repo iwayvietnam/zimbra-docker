@@ -15,14 +15,22 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #!/bin/sh
-## Preparing all the variables like IP, Hostname, etc, all of them from the container
-HOSTNAME=$(hostname -a)
-DOMAIN=$(hostname -d)
 
 ## BEGIN. Check if Zimbra already installed?
 if [ -e /opt/zimbra-install/install-autoKeys ]
 then ## Zimbra NOT installed yet.
 
+cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
+sed -i 's|SysSock.Use="off")|SysSock.Use="on")|g' /etc/rsyslog.conf
+sed -i 's|module(load="imjournal"|#module(load="imjournal"|g' /etc/rsyslog.conf
+sed -i 's|StateFile="imjournal.state"|#StateFile="imjournal.state"|g' /etc/rsyslog.conf
+sed -i 's|*.info;mail.none;authpriv.none;cron.none|*.info;local0.none;local1.none;mail.none;auth.none;authpriv.none;cron.none|g' /etc/rsyslog.conf
+echo -e "\nlocal0.*                -/var/log/zimbra.log\nlocal1.*                -/var/log/zimbra-stats.log\nauth.*                  -/var/log/zimbra.log\nmail.*                -/var/log/zimbra.log" >> /etc/rsyslog.conf
+rsyslogd
+
+## Preparing all the variables like IP, Hostname, etc, all of them from the container
+HOSTNAME=$(hostname -a)
+DOMAIN=$(hostname -d)
 CONTAINERIP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 RANDOMHAM=$(date +%s|sha256sum|base64|head -c 10)
 RANDOMSPAM=$(date +%s|sha256sum|base64|head -c 10)
@@ -161,6 +169,7 @@ echo "You can access now to your Zimbra Collaboration Server https://$HOSTNAME.$
 rm -Rf /opt/zimbra-install
 
 else ## Zimbra already installed. Just need to start Zimbra services.
+  rsyslogd
   su - zimbra -c 'zmcontrol restart'
 fi ## END. Check if Zimbra already installed?
 
