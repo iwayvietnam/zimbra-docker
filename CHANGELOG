@@ -1,5 +1,8 @@
 ### Zimra-docker ChangeLog
 
+##### v0.5
++ Add rsyslogd running in container for Zimbra to write logs
+
 ##### v0.4.2
 + Fix issues
 
