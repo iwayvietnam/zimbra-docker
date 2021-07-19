@@ -1,6 +1,6 @@
 # zimbra-docker
 The project to build a Zimbra 9 (built by Zextras) Docker image based on Rocky Linux 8.
-okok
+
 Check out the prebuilt image on Docker Hub: https://hub.docker.com/r/iwayvietnam/zimbra_all
 
 ### How to start a new Zimbra container from prebuilt Docker image
