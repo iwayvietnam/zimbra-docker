@@ -20,6 +20,10 @@
 if [ -e /opt/zimbra-install/install-autoKeys ]
 then ## Zimbra NOT installed yet.
 
+## Push-logs-to-ELK
+cp /opt/push-logs-to-ELK/* /etc/rsyslog.d/
+
+## Config rsyslog and start
 cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
 sed -i 's|SysSock.Use="off")|SysSock.Use="on")|g' /etc/rsyslog.conf
 sed -i 's|module(load="imjournal"|#module(load="imjournal"|g' /etc/rsyslog.conf
