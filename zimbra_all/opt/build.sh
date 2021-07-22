@@ -59,7 +59,9 @@ cd /opt/zimbra-install/zimbra-installer
 if [ $INSTALLED-SERVICES = "LDAP" ]
 then
   ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-ldap
-  cat <<EOF >/opt/zimbra-install/installParameters
+  if [ $LDAPHOST = "" ]
+  then #the first LDAP server
+    cat <<EOF >/opt/zimbra-install/installParameters
 CREATEADMIN="admin@$DOMAIN"
 CREATEADMINPASS="$PASSWORD"
 CREATEDOMAIN="$DOMAIN"
@@ -101,6 +103,45 @@ zimbra_require_interprocess_security="1"
 zimbra_server_hostname="$HOSTNAME.$DOMAIN"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap"
 EOF
+  else #the additional LDAP servers
+    cat <<EOF >/opt/zimbra-install/installParameters
+EXPANDMENU="no"
+HOSTNAME="$HOSTNAME.$DOMAIN"
+JAVAHOME="/opt/zimbra/common/lib/jvm/java"
+LDAPAMAVISPASS="$PASSWORD"
+LDAPPOSTPASS="$PASSWORD"
+LDAPROOTPASS="$PASSWORD"
+LDAPADMINPASS="$PASSWORD"
+LDAPREPPASS="$PASSWORD"
+LDAPBESSEARCHSET="set"
+LDAPDEFAULTSLOADED="1"
+LDAPHOST="$LDAPHOST"
+LDAPPORT="389"
+LDAPREPLICATIONTYPE="master"
+REMOVE="no"
+STARTSERVERS="yes"
+SYSTEMMEMORY="3.8"
+UPGRADE="yes"
+VERSIONUPDATECHECKS="FALSE"
+ZIMBRA_REQ_SECURITY="yes"
+ldap_bes_searcher_password="$PASSWORD"
+ldap_dit_base_dn_config="cn=zimbra"
+ldap_nginx_password="$PASSWORD"
+ldap_master_url="ldap://$LDAPHOST:389"
+ldap_url="ldap://$HOSTNAME.$DOMAIN:389"
+ssl_default_digest="sha256"
+zimbraDefaultDomainName="$DOMAIN"
+zimbraIPMode="ipv4"
+zimbraPrefTimeZoneId="Asia/Ho_Chi_Minh"
+zimbraVersionCheckNotificationEmail="admin@$DOMAIN"
+zimbraVersionCheckNotificationEmailFrom="admin@$DOMAIN"
+zimbraVersionCheckSendNotifications="FALSE"
+zimbra_ldap_userdn="uid=zimbra,cn=admins,cn=zimbra"
+zimbra_require_interprocess_security="1"
+zimbra_server_hostname="$HOSTNAME.$DOMAIN"
+INSTALL_PACKAGES="zimbra-core zimbra-ldap"
+EOF
+  fi
 
 elif [ $INSTALLED-SERVICES = "MTA" ]
   ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-mta
