@@ -1,4 +1,6 @@
 ### Zimra-docker ChangeLog
+##### v0.5
++ Add push logs to logstash
 
 ##### v0.4.2
 + Fix issues

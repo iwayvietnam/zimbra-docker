@@ -50,6 +50,7 @@ services:
           - './zimbra-storage:/opt/zimbra:rw'
       environment:
           - PASSWORD=Zimbra2021
+          #- IP_LOGSTASH=192.168.100.252 #if you want push log to logstash (optional)
       networks:
         vpcbr:
           ipv4_address: 10.0.0.3
