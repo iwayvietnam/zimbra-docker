@@ -55,22 +55,10 @@ tar xzvf /opt/zimbra-install/zcs-9.0.0_OSE_RHEL8_latest-zextras.tgz -C /opt/zimb
 
 echo "Installing Zimbra Collaboration just the Software"
 cd /opt/zimbra-install/zimbra-installer
+
 if [ $INSTALLED-SERVICES = "LDAP" ]
 then
   ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-ldap
-elif [ $INSTALLED-SERVICES = "MTA" ]
-  ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-mta
-elif [ $INSTALLED-SERVICES = "PROXY" ]
-  ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-proxy
-elif [ $INSTALLED-SERVICES = "MAILBOX" ]
-  ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-mailbox
-else # All Services
-  ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys
-fi
-
-##Creating the Zimbra Collaboration Config File ##
-if [ $INSTALLED-SERVICES = "LDAP" ]
-then
   cat <<EOF >/opt/zimbra-install/installParameters
 CREATEADMIN="admin@$DOMAIN"
 CREATEADMINPASS="$PASSWORD"
@@ -113,13 +101,78 @@ zimbra_require_interprocess_security="1"
 zimbra_server_hostname="$HOSTNAME.$DOMAIN"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap"
 EOF
+
 elif [ $INSTALLED-SERVICES = "MTA" ]
-  INSTALL_PACKAGES="zimbra-core zimbra-mta zimbra-dnscache"
+  ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-mta
+  cat <<EOF >/opt/zimbra-install/installParameters
+AVDOMAIN="$DOMAIN"
+AVUSER="admin@$DOMAIN"
+DOTRAINSA="yes"
+EXPANDMENU="no"
+HOSTNAME="$HOSTNAME.$DOMAIN"
+JAVAHOME="/opt/zimbra/common/lib/jvm/java"
+LDAPAMAVISPASS="$PASSWORD"
+LDAPPOSTPASS="$PASSWORD"
+LDAPROOTPASS="$PASSWORD"
+LDAPADMINPASS="$PASSWORD"
+LDAPREPPASS="$PASSWORD"
+LDAPBESSEARCHSET="set"
+LDAPDEFAULTSLOADED="1"
+LDAPHOST="$LDAPHOST"
+LDAPPORT="389"
+LDAPREPLICATIONTYPE="master"
+LDAPSERVERID="1"
+REMOVE="no"
+RUNAV="yes"
+RUNCBPOLICYD="no"
+RUNDKIM="yes"
+RUNSA="yes"
+RUNVMHA="no"
+SMTPDEST="admin@$DOMAIN"
+SMTPHOST="$HOSTNAME.$DOMAIN"
+SMTPNOTIFY="yes"
+SMTPSOURCE="admin@$DOMAIN"
+STARTSERVERS="yes"
+SYSTEMMEMORY="3.8"
+TRAINSAHAM="ham.$RANDOMHAM@$DOMAIN"
+TRAINSASPAM="spam.$RANDOMSPAM@$DOMAIN"
+UPGRADE="yes"
+VERSIONUPDATECHECKS="FALSE"
+VIRUSQUARANTINE="virus-quarantine.$RANDOMVIRUS@$DOMAIN"
+ZIMBRA_REQ_SECURITY="yes"
+ldap_bes_searcher_password="$PASSWORD"
+ldap_dit_base_dn_config="cn=zimbra"
+ldap_nginx_password="$PASSWORD"
+ldap_url="ldap://$LDAPHOST:389"
+postfix_mail_owner="postfix"
+postfix_setgid_group="postdrop"
+ssl_default_digest="sha256"
+av_notify_user="admin@$DOMAIN"
+zimbraDNSMasterIP="8.8.8.8"
+zimbraDNSTCPUpstream="no"
+zimbraDNSUseTCP="yes"
+zimbraDNSUseUDP="yes"
+zimbraDefaultDomainName="$DOMAIN"
+zimbraIPMode="ipv4"
+zimbraMtaMyNetworks="127.0.0.0/8 $CONTAINERIP/32 [::1]/128 [fe80::]/64"
+zimbraPrefTimeZoneId="Asia/Ho_Chi_Minh"
+zimbraVersionCheckNotificationEmail="admin@$DOMAIN"
+zimbraVersionCheckNotificationEmailFrom="admin@$DOMAIN"
+zimbraVersionCheckSendNotifications="FALSE"
+zimbra_ldap_userdn="uid=zimbra,cn=admins,cn=zimbra"
+zimbra_require_interprocess_security="1"
+zimbra_server_hostname="$HOSTNAME.$DOMAIN"
+INSTALL_PACKAGES="zimbra-core zimbra-mta zimbra-dnscache"
+EOF
+
 elif [ $INSTALLED-SERVICES = "PROXY" ]
+  ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-proxy
   INSTALL_PACKAGES="zimbra-core zimbra-proxy zimbra-memcached"
 elif [ $INSTALLED-SERVICES = "MAILBOX" ]
+  ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-mailbox
   INSTALL_PACKAGES="zimbra-core zimbra-loggerzimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-drive zimbra-chat"
 else # All Services
+  ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys
   cat <<EOF >/opt/zimbra-install/installParameters
 AVDOMAIN="$DOMAIN"
 AVUSER="admin@$DOMAIN"
@@ -185,7 +238,7 @@ UIWEBAPPS="yes"
 UPGRADE="yes"
 USEKBSHORTCUTS="TRUE"
 USESPELL="yes"
-VERSIONUPDATECHECKS="TRUE"
+VERSIONUPDATECHECKS="FALSE"
 VIRUSQUARANTINE="virus-quarantine.$RANDOMVIRUS@$DOMAIN"
 ZIMBRA_REQ_SECURITY="yes"
 ldap_bes_searcher_password="$PASSWORD"
