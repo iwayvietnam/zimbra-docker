@@ -44,7 +44,7 @@ $ docker run --name zimbra-iwaytest2 -it \
 -p 3443:3443 -p 9071:9071 \
 -h mail.iwaytest2.com --net=zimbranet --dns 172.28.0.1 \
 -v zimbra-iwaytest2:/opt/zimbra \
--e PASSWORD=Zimbra2021 -e IP_LOGSTASH=192.168.100.252 iwayvietnam/zimbra_all
+-e PASSWORD=Zimbra2021 -e LOGSTASH_IP=192.168.100.252 iwayvietnam/zimbra_all
 ```
 (and WAIT...)
 
