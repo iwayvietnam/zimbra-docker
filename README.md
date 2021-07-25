@@ -4,7 +4,7 @@ The project to build a Zimbra 9 (built by Zextras) Docker image based on Rocky L
 Check out the prebuilt image on Docker Hub: https://hub.docker.com/r/iwayvietnam/zimbra_all
 
 ### How to start a new Zimbra container from prebuilt Docker image
-##### Create a new Docker network dedicated for Zimbra
+##### Create a new Docker network dedicated for Zimbra 
 ```bash
 $ docker network create --driver=bridge --subnet=172.28.0.0/16 zimbranet
 ```
