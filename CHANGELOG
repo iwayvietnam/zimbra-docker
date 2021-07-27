@@ -1,5 +1,8 @@
 ### Zimra-docker ChangeLog
 
+##### v0.6
++ Add support for multi-server installation.
+
 ##### v0.5
 + Add rsyslogd running in container for Zimbra to write logs
 
