@@ -31,25 +31,13 @@ $ docker run --name zimbra-iwaytest2 -it \
 -p 3443:3443 -p 9071:9071 \
 -h mail.iwaytest2.com --net=zimbranet --dns 172.28.0.1 \
 -v zimbra-iwaytest2:/opt/zimbra \
--e PASSWORD=Zimbra2021 iwayvietnam/zimbra_all
-```
-(and WAIT...)
-
-##### Run All Zimbra Services (Zimbra AiO) in a container with push logs to Logstash (optional):
-```bash
-$ docker run --name zimbra-iwaytest2 -it \
--p 25:25 -p 80:80 -p 465:465 \
--p 587:587 -p 110:110 -p 143:143 \
--p 993:993 -p 995:995 -p 443:443 \
--p 3443:3443 -p 9071:9071 \
--h mail.iwaytest2.com --net=zimbranet --dns 172.28.0.1 \
--v zimbra-iwaytest2:/opt/zimbra \
--e PASSWORD=Zimbra2021 -e LOGSTASH_IP=192.168.100.252 iwayvietnam/zimbra_all
+-e PASSWORD=Zimbra2021 \
+-e LOGSTASH_IP=192.168.100.252 \ #if you would like to push logs to Logstash / ELK.
+iwayvietnam/zimbra_all
 ```
 (and WAIT...)
 
 ### NEW: Run multi-servers Zimbra in separated containers 
-### (if you want to push logs to Logstash add "-e LOGSTASH_IP=192.168.100.252" to each container.)
 ##### Run the first Zimbra LDAP in a container:
 ```bash
 $ docker volume create zimbra-ldap1
@@ -58,7 +46,9 @@ $ docker run --name zimbra-ldap1 -it \
 -h ldap1.iwaytest2.com --net=zimbranet --dns 172.28.0.1 \
 -v zimbra-ldap1:/opt/zimbra \
 -e INSTALLED-SERVICES=LDAP \
--e PASSWORD=Zimbra2021 iwayvietnam/zimbra_all
+-e PASSWORD=Zimbra2021 \
+-e LOGSTASH_IP=192.168.100.252 \ #if you would like to push logs to Logstash / ELK.
+iwayvietnam/zimbra_all
 ```
 ##### Run an additional Zimbra LDAP in a container:
 ```bash
@@ -68,7 +58,9 @@ $ docker run --name zimbra-ldap2 -it \
 -h ldap2.iwaytest2.com --net=zimbranet --dns 172.28.0.1 \
 -v zimbra-ldap2:/opt/zimbra \
 -e INSTALLED-SERVICES=LDAP -e LDAPHOST=ldap1.iwaytest2.com \
--e PASSWORD=Zimbra2021 iwayvietnam/zimbra_all
+-e PASSWORD=Zimbra2021 \
+-e LOGSTASH_IP=192.168.100.252 \ #if you would like to push logs to Logstash / ELK.
+iwayvietnam/zimbra_all
 ```
 ##### Run a new Zimbra Mailstore in a container:
 ```bash
@@ -79,7 +71,9 @@ $ docker run --name zimbra-mailstore -it \
 -h mailstore.iwaytest2.com --net=zimbranet --dns 172.28.0.1 \
 -v zimbra-mailstore:/opt/zimbra \
 -e INSTALLED-SERVICES=MAILSTORE -e LDAPHOST=ldap1.iwaytest2.com \
--e PASSWORD=Zimbra2021 iwayvietnam/zimbra_all
+-e PASSWORD=Zimbra2021 \
+-e LOGSTASH_IP=192.168.100.252 \ #if you would like to push logs to Logstash / ELK.
+iwayvietnam/zimbra_all
 ```
 ##### Run a new Zimbra MTA in a container:
 ```bash
@@ -90,7 +84,9 @@ $ docker run --name zimbra-mta -it \
 -h mta.iwaytest2.com --net=zimbranet --dns 172.28.0.1 \
 -v zimbra-mta:/opt/zimbra \
 -e INSTALLED-SERVICES=MTA -e LDAPHOST=ldap1.iwaytest2.com \
--e PASSWORD=Zimbra2021 iwayvietnam/zimbra_all
+-e PASSWORD=Zimbra2021 \
+-e LOGSTASH_IP=192.168.100.252 \ #if you would like to push logs to Logstash / ELK.
+iwayvietnam/zimbra_all
 ```
 ##### Run a new Zimbra Proxy in a container:
 ```bash
@@ -101,7 +97,9 @@ $ docker run --name zimbra-proxy -it \
 -h proxy.iwaytest2.com --net=zimbranet --dns 172.28.0.1 \
 -v zimbra-proxy:/opt/zimbra \
 -e INSTALLED-SERVICES=PROXY -e LDAPHOST=ldap1.iwaytest2.com \
--e PASSWORD=Zimbra2021 iwayvietnam/zimbra_all
+-e PASSWORD=Zimbra2021 \
+-e LOGSTASH_IP=192.168.100.252 \ #if you would like to push logs to Logstash / ELK.
+iwayvietnam/zimbra_all
 ```
 
 ### LICENSE

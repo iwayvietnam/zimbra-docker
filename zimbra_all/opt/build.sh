@@ -20,17 +20,6 @@
 if [ -e /opt/zimbra-install/install-autoKeys ]
 then ## Zimbra NOT installed yet.
 
-if [ -z "$LOGSTASH_IP" ]
-then
-      echo "Push logs to Logstash are not set, so no configuration."
-      rm -rf /opt/push-logs-to-logstash
-else
-      echo "Push logs to logstash server $LOGSTASH_IP."
-      cp /opt/push-logs-to-logstash/* /etc/rsyslog.d/
-      sed -i "s|LOGSTASH_IP|$LOGSTASH_IP|g" /etc/rsyslog.d/02-output.conf
-      rm -rf /opt/push-logs-to-logstash
-fi
-
 cp /etc/rsyslog.conf /etc/rsyslog.conf.bak
 sed -i 's|SysSock.Use="off")|SysSock.Use="on")|g' /etc/rsyslog.conf
 sed -i 's|module(load="imjournal"|#module(load="imjournal"|g' /etc/rsyslog.conf
@@ -288,6 +277,11 @@ elif [ $INSTALLED-SERVICES = "MAILSTORE" ]
   cat <<EOF >/opt/zimbra-install/installParameters
 AVDOMAIN="$DOMAIN"
 AVUSER="admin@$DOMAIN"
+CREATEADMIN="admin@$DOMAIN"
+CREATEADMINPASS="$PASSWORD"
+CREATEDOMAIN="$DOMAIN"
+DOCREATEADMIN="no"
+DOCREATEDOMAIN="no"
 EXPANDMENU="no"
 HOSTNAME="$HOSTNAME.$DOMAIN"
 HTTPPORT="8080"
