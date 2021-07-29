@@ -1,5 +1,8 @@
 ### Zimra-docker ChangeLog
 
+##### v0.7.1
+Add a missing package to fix the issue wrong "zmconfigd NOT running..."
+
 ##### v0.7
 Add support Push Zimbra logs to Logstash/ELK (thanks to Nguyen Van Hieu aka. [hieunguyen23](https://github.com/hieunguyen23))
 
