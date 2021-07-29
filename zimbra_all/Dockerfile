@@ -29,6 +29,7 @@ RUN yum -y update && yum -y install \
   bind-utils \
   rsyslog \
   nmap-ncat \
+  which \
   wget
 
 RUN ln -s -f /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
