@@ -144,6 +144,7 @@ EOF
   fi
 
 elif [ $INSTALLED-SERVICES = "MTA" ]
+then
   ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-mta
   cat <<EOF >/opt/zimbra-install/installParameters
 AVDOMAIN="$DOMAIN"
@@ -207,6 +208,7 @@ INSTALL_PACKAGES="zimbra-core zimbra-mta zimbra-dnscache"
 EOF
 
 elif [ $INSTALLED-SERVICES = "PROXY" ]
+then
   ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-proxy
   cat <<EOF >/opt/zimbra-install/installParameters
 AVDOMAIN="$DOMAIN"
@@ -273,6 +275,7 @@ INSTALL_PACKAGES="zimbra-core zimbra-proxy zimbra-memcached"
 EOF
 
 elif [ $INSTALLED-SERVICES = "MAILSTORE" ]
+then
   ./install.sh -s --platform-override < /opt/zimbra-install/install-autoKeys-mailstore
   cat <<EOF >/opt/zimbra-install/installParameters
 AVDOMAIN="$DOMAIN"
